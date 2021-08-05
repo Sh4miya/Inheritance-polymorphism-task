@@ -20,12 +20,17 @@ namespace Inheritance_polymorphism_task
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
     }
 
     class Animal
     {
+        public Animal(string type, int id, double price)
+        {
+
+        }
+
         public string type { get; set; }
         public int ID { get; set; }
         public double price { get; set; }
