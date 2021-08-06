@@ -11,6 +11,9 @@ namespace Inheritance_polymorphism_task
         public static double cowMilk;
         public static double jerseyMilk;
         public static double goatMilk;
+        public static double vacCow;
+        public static double vacJCow;
+        public static double vacGoat;
 
     }
 }

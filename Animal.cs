@@ -6,16 +6,20 @@ using System.Threading.Tasks;
 
 namespace Inheritance_polymorphism_task
 {
-    abstract class Animal
+    class Animal
     {
         public int id;
 
-        public Animal(int id)
+
+        public abstract Animal(int id)
         {
-            this.id = id;
+            this.milkAmt = milkAmt;
         }
 
-        public abstract double getProf();
+        public double getProf()
+        {
+            return (0);
+        }
 
     }
 

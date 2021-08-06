@@ -29,16 +29,18 @@ namespace Inheritance_polymorphism_task
         }
 
 
-        
-
-        private double tProf(List<double> list)
+        private double tProf(Animal [] a)
         {
-            List<double> aList = new List<double>();
             double profit = 0.0;
 
-            for (int i = 0; i < aList.Count; i++)
+            for (int i = 0; i < 10; i++)
             {
-                profit += aList[i].getProf();
+                a[i] = new Cow(i + 100, i * 23.5);
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                profit += myFarm[i].getProf();
             }
 
             return profit;
@@ -46,18 +48,22 @@ namespace Inheritance_polymorphism_task
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string line;
             List<Animal> farm = new List<Animal>();
+            string line;
             StreamReader file = new StreamReader(@"C:\Users\the_1\source\repos\Inheritance-polymorphism-task\task-data.txt");
             while((line = file.ReadLine()) != null)
             {
-                string[] animls = line.Split(',');
-                int id = int.Parse(animls[0]);
-                double p = double.Parse(animls[1]);
-                string type = animls[2];
-                farm.Add(new Animal(id, p, type));
+                var extract = line.Split(',');
+                farm.Add(new Animal()
+                {
+                    Id = extract[0],
+                    Price = extract[1],
+                    Type = extract[2]
+                });
             }
+            file.Close();
 
+            var farmArray = farm.ToArray();
 
         }
     }

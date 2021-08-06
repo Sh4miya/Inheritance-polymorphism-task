@@ -14,9 +14,10 @@ namespace Inheritance_polymorphism_task
         {
             this.milkAmt = milkAmt;
         }
+
         override public double getProf()
         {
-            return (0);
+            return (20.75);
         }
 
     }

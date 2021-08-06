@@ -8,7 +8,6 @@ namespace Inheritance_polymorphism_task
 {
     class Goat : Animal
     {
-        public double milkAmt;
 
         public Goat(int id, double milkAmt): base(id)
         {

@@ -8,13 +8,14 @@ namespace Inheritance_polymorphism_task
 {
     class JerseyCow : Cow
     {
+
         public JerseyCow(int id, double milkAmt) : base(id, milkAmt)
         {
 
         }
         override public double getProf()
         {
-            return (0);
+            return (20.75);
         }
     }
 }
