@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Inheritance_polymorphism_task
@@ -34,62 +29,39 @@ namespace Inheritance_polymorphism_task
         }
 
 
-        public class Animal
+        
+
+        private double tProf(List<double> list)
         {
-            public string Type { get; set; }
-            public int Id { get; set; }
-            public double Price { get; set; }
+            List<double> aList = new List<double>();
+            double profit = 0.0;
 
-            public Animal(string type, int id, double price)
+            for (int i = 0; i < aList.Count; i++)
             {
-                Type = type;
-                Id = id;
-                Price = price;
-            }
-        }
-
-        public class Cow : Animal
-        {
-            public Cow(Animal animal, string cow) : base(animal.Type, animal.Id, animal.Price)
-
-            {
-                this.cow = cow;
+                profit += aList[i].getProf();
             }
 
-            public string cow { get; set; }
-            //public string jCow { get; set; }
-
+            return profit;
         }
 
-        public class Goat : Animal
+        private void button1_Click(object sender, EventArgs e)
         {
-            public Goat(Animal animal, string goat) : base(animal.Type, animal.Id, animal.Price)
+            string line;
+            List<Animal> farm = new List<Animal>();
+            StreamReader file = new StreamReader(@"C:\Users\the_1\source\repos\Inheritance-polymorphism-task\task-data.txt");
+            while((line = file.ReadLine()) != null)
             {
-                this.goat = goat;
-            }
-            public string goat { get; set; }
-        }
-
-        static class Stats
-        {
-            static void Main(String[] args)
-            {
-                string[] data = System.IO.File.ReadAllLines(@"C:\Users\the_1\source\repos\Inheritance-polymorphism-task\task-data.txt");
-
-                try
-                {
-                    Animal animal = new Animal();
-                }
-
-                foreach (string line in data)
-                {
-                    string result = "\t" + line;                   
-                }
-
+                string[] animls = line.Split(',');
+                int id = int.Parse(animls[0]);
+                double p = double.Parse(animls[1]);
+                string type = animls[2];
+                farm.Add(new Animal(id, p, type));
             }
 
-        }
 
-    }                  
+        }
+    }
+
 }
+
 
