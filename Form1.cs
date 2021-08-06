@@ -78,7 +78,7 @@ namespace Inheritance_polymorphism_task
 
                 try
                 {
-                    Animal animal = new Animal(data);
+                    Animal animal = new Animal();
                 }
 
                 foreach (string line in data)
