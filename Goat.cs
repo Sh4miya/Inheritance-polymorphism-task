@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Inheritance_polymorphism_task
-{
+﻿namespace Inheritance_polymorphism_task
+{//create the Goat class which inherits from Animal
     class Goat : Animal
     {
-
-        public Goat(int id, double milkAmt): base(id)
+        public double amtMilk;
+        //sets amount of milk based on the text file
+        public Goat( double amtMilk)
         {
-            this.milkAmt = milkAmt;
+            this.amtMilk = amtMilk;
         }
 
+        //calculate profit -> amount of milk * price - vaccination based on the price set by the user
         override public double getProf()
         {
-            return (20.0);
+            double profit = this.amtMilk * Prices.goatMilk - Prices.vacGoat;
+
+            return (profit);
         }
     }
 }

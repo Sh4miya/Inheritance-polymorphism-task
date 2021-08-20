@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Inheritance_polymorphism_task
 {
@@ -12,59 +13,114 @@ namespace Inheritance_polymorphism_task
             InitializeComponent();
         }
 
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Result_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private double tProf(Animal [] a)
+        //calculate the total profits from the dictionary of animals
+        static double totalProf(Dictionary <int, Animal> farmAnimals)
         {
             double profit = 0.0;
-
-            for (int i = 0; i < 10; i++)
+            
+            //iterate through the hashtables starting with the first entry and stopping at the last
+            for(int i =  farmAnimals.Keys.First(); i <= farmAnimals.Keys.Last(); i++)
             {
-                a[i] = new Cow(i + 100, i * 23.5);
+                Animal myAnimal = farmAnimals[i];
+                profit += myAnimal.getProf();
             }
-
-            for (int i = 0; i < 10; i++)
-            {
-                profit += myFarm[i].getProf();
-            }
-
             return profit;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            List<Animal> farm = new List<Animal>();
-            string line;
-            StreamReader file = new StreamReader(@"C:\Users\the_1\source\repos\Inheritance-polymorphism-task\task-data.txt");
-            while((line = file.ReadLine()) != null)
-            {
-                var extract = line.Split(',');
-                farm.Add(new Animal()
+            try
+            {//opens the file directory to locate the type of file you will be reading
+                OpenFileDialog openFileDialog = new OpenFileDialog
                 {
-                    Id = extract[0],
-                    Price = extract[1],
-                    Type = extract[2]
-                });
+                    InitialDirectory = @"C:\",
+                    //limits the choice between all files and text file
+                    Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*", 
+                    FilterIndex = 2,
+                    RestoreDirectory = true
+                };
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {//displays the file location in the fLoc box
+                    fLoc.Text = openFileDialog.FileName;
+                }
             }
-            file.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }        
+        }
 
-            var farmArray = farm.ToArray();
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            try
+            { //get the five values for milk and vaccination prices
+                Prices.cowMilk = double.Parse(cowMilk.Text);
+                Prices.goatMilk = double.Parse(goatMilk.Text);
+                Prices.vacCow = double.Parse(cowVac.Text);
+                Prices.vacJCow = double.Parse(jCowVac.Text);
+                Prices.vacGoat = double.Parse(goatVac.Text);
+                readData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
+        public void readData()
+        {
+            double price = 0.0;
+
+            try
+            {   // create the hashtable (dictionary) of animals
+                Dictionary<int, Animal> farmAnimals = new Dictionary<int, Animal>();
+
+                //Animal[] fAnimals = new Animal[10]; array version
+
+                int id;
+                double amtMilk;
+                string type;
+
+                //read the text file from the chosen file location based on the fLoc box
+                using (StreamReader reader = new StreamReader(fLoc.Text))
+                {
+                    string line;
+                    //check if the line is not null and read each line
+                    while ((line = reader.ReadLine()) != null)
+                    { //splits the line to get each type of data
+                        string[] temp = line.Split(',');                        
+
+                        id = int.Parse(temp[0]);
+                        amtMilk = double.Parse(temp[1]);
+                        type = temp[2];
+
+                        //checks the data for the animal type and creates the animal class based on type
+                        if (type == "Cow")
+                        {
+                            farmAnimals.Add(id, new Cow(amtMilk));
+                        }
+                        else if (type == "Jersey_Cow")
+                        {
+                            farmAnimals.Add(id, new JerseyCow(amtMilk));
+                        }
+                        else if (type == "Goat")
+                        {
+                            farmAnimals.Add(id, new Goat(amtMilk));
+                        }                      
+                    }
+                    reader.Close();
+
+                    price += totalProf(farmAnimals);
+
+                    //return the price rounded to 2dp
+                    Profit.Text = "$" + Math.Round(price, 2);
+                }
+            }
+            catch
+            {
+                MessageBox.Show("File Error!");
+            }
         }
     }
 

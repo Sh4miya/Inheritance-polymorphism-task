@@ -1,26 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Inheritance_polymorphism_task
+﻿namespace Inheritance_polymorphism_task
 {
-    class Animal
+     abstract class Animal
     {
-        public int id;
-
-
-        public abstract Animal(int id)
-        {
-            this.milkAmt = milkAmt;
-        }
-
-        public double getProf()
-        {
-            return (0);
-        }
+        //calculates profit based on the animals respective class
+        public abstract double getProf();
 
     }
-
 }
